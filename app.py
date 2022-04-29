@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from main import createArray, push, pop, QuickSort, getStack
+from main import createArray, push, pop, QuickSort, getStack, Search
 app = Flask(__name__)
 stack = [[], [], [], [], [], '0']
 initial = True
@@ -33,6 +33,16 @@ def hello_world():
         return render_template("index.html", array5 = stack[0], array4 = stack[1], array3 = stack[2], array2 = stack[3], array1 = stack[4])
 
     return render_template("index.html", array5 = stack[0], array4 = stack[1], array3 = stack[2], array2 = stack[3], array1 = stack[4])
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    print("Searching...")
+    element = int(request.form.get("search"))
+    if (Search(stack, element)):
+        return render_template("search.html", found="Element is found")
+    else:
+        return render_template("search.html", found="Element is NOT found")
+
     
 if (__name__ == "__main__"):
     app.run(debug=True, use_debugger=False, use_reloader=False)
